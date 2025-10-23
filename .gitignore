@@ -1,0 +1,23 @@
+# === Kotlin / Java ===
+*.class
+*.jar
+*.war
+*.ear
+
+# === Build directories ===
+/out/
+/build/
+/target/
+
+# === IDE / Editor files ===
+.idea/
+*.iml
+.vscode/
+
+# === System files ===
+.DS_Store
+Thumbs.db
+
+# === Logs / Temp ===
+*.log
+*.tmp
