@@ -1,3 +1,8 @@
 package app
 
-data class Book(var title: String, var publisher: String, var date: String, var authors: Array<String>)
+data class Book(
+    val title: String,
+    val publisher: String,
+    val date: String,
+    val authors: List<String>
+)

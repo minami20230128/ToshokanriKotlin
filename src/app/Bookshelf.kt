@@ -1,13 +1,10 @@
 package app
 
 class Bookshelf {
-    private val _books: MutableList<Book>
+    private val _books = mutableListOf<Book>()
 
-    init {
-        this._books = mutableListOf<Book>()
-    }
+    fun add(book: Book) = _books.add(book)
 
-    fun addBook(book: Book) = _books.add(book)
-
-    fun getBooks(): List<Book> = _books.toList()
+    val books: List<Book>
+        get() = _books.toList()
 }
