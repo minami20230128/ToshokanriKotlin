@@ -4,19 +4,20 @@ fun main() {
     val main = Main()
     main.addBook()
     main.showAllBooks()
+    main.searchBooks()
 }
 
 class Main {
     val bookshelf = Bookshelf()
 
+    //すべての書籍情報を確認できる。
     fun showAllBooks() {
-        bookshelf.books.forEachIndexed {
-            index, b ->
-            println("${index + 1}. ${b.title} (${b.publisher}, ${b.date})")
-            println("   著者: ${b.authors.joinToString(", ")}")
+        bookshelf.books.forEach {
+            this.showBook(it)
         }
     }
 
+    //書籍を追加する。著者の入力を終了したいときはEnterを押す。
     fun addBook() {
         println("タイトルを入力してください。")
         val title = readLine()?: ""
@@ -34,5 +35,23 @@ class Main {
 
         val book = Book(title, publisher, date, authors)
         bookshelf.add(book)
+    }
+
+    //タイトルを部分一致で書籍検索。複数該当する書籍があれば複数表示。
+    fun searchBooks() {
+        println("探したい書籍のタイトルを入力してください。")
+        val title = readLine()?: ""
+        val searchedBooks = bookshelf.books.filter {
+            it.title.contains(title)
+        }
+
+        searchedBooks.forEach {
+            this.showBook(it)
+        }
+    }
+
+    private fun showBook(book: Book) {
+        println("${book.title} (${book.publisher}, ${book.date})")
+        println("   著者: ${book.authors.joinToString(", ")}")
     }
 }
