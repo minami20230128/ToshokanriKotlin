@@ -1,10 +1,14 @@
 package app
 
+import java.io.FileWriter
+import java.io.PrintWriter
+import java.io.BufferedWriter
+
 fun main() {
     val main = Main()
     main.addBook()
     main.showAllBooks()
-    main.searchBooks()
+    main.saveBooks()
 }
 
 class Main {
@@ -48,6 +52,24 @@ class Main {
         searchedBooks.forEach {
             this.showBook(it)
         }
+    }
+
+    //書籍情報を、ユーザが入力したテキストファイルに保存する。
+    //「タイトル,出版社名,出版年月日,著者名」とカンマ区切りで保存。
+    //指定したテキストファイルが存在しない場合は新たに作成。
+    //すでに指定したファイルに何か書き込まれている場合は上書き。
+    fun saveBooks() {
+        println("書籍情報を保存するファイルの名前を入力してください。")
+        var title = readLine()?: ""
+        val fileWriter = FileWriter(title, false)
+        val printWriter = PrintWriter(BufferedWriter(fileWriter))
+        
+        bookshelf.books.forEach { book ->
+            val str = "${book.title},${book.publisher},${book.date},${book.authors.joinToString(",")}"
+            printWriter.println(str)
+        }
+
+        printWriter.close()
     }
 
     private fun showBook(book: Book) {

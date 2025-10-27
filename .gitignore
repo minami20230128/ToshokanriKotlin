@@ -21,3 +21,6 @@ Thumbs.db
 # === Logs / Temp ===
 *.log
 *.tmp
+
+# === Other ===
+*.txt
