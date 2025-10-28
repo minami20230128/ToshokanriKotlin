@@ -3,12 +3,14 @@ package app
 import java.io.FileWriter
 import java.io.PrintWriter
 import java.io.BufferedWriter
+import java.io.File
+import java.io.FileReader
+import java.io.FileNotFoundException
 
 fun main() {
     val main = Main()
-    main.addBook()
+    main.loadBooks()
     main.showAllBooks()
-    main.saveBooks()
 }
 
 class Main {
@@ -71,6 +73,40 @@ class Main {
 
         printWriter.close()
     }
+
+    //ユーザが指定したテキストファイルから書籍情報を読み出す。
+    //以下の場合はエラーメッセージを出す。
+    //・指定したファイルがない
+    //・ファイルの形式が不正（split後の要素数が4つ未満）
+    //  不正な行の処理を飛ばして次の行の処理を実行する。
+    fun loadBooks() {
+        println("書籍情報を読み出すファイルの名前を入力してください。")
+        var fileTitle = readLine()?: ""
+        try {
+            val file = File(fileTitle)
+            file.bufferedReader().use { reader -> //.useと書くと自動的に閉じてくれる
+                reader.forEachLine line@{ 
+                    val list = it.split(",")
+                    if (list.size < 4) {
+                        println("行の形式が不正です")
+                        return@line
+                    }
+
+                    val title = list[0]
+                    val publisher = list[1]
+                    val date = list[2]
+                    val authors = list.drop(3)
+                    val book = Book(title, publisher, date, authors)
+                    this.bookshelf.add(book)
+
+                    println("ファイルをロードしました。")
+                }
+            } 
+        } catch (e: FileNotFoundException) {
+            println("指定したファイルが見つかりません。")
+        } 
+    }
+    
 
     private fun showBook(book: Book) {
         println("${book.title} (${book.publisher}, ${book.date})")
