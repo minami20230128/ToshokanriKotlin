@@ -11,6 +11,8 @@ fun main() {
     val main = Main()
     main.loadBooks()
     main.showAllBooks()
+    main.deleteBooks()
+    main.showAllBooks()
 }
 
 class Main {
@@ -41,6 +43,29 @@ class Main {
 
         val book = Book(title, publisher, date, authors)
         bookshelf.add(book)
+    }
+
+    //タイトルを部分一致で書籍検索し、該当する書籍を消去。
+    //複数該当する書籍がある場合、どの書籍を消去するかを一つだけ番号で指定してもらう。（保留。いったん全部削除する方向で実装）
+    fun deleteBooks() {
+        println("消去する書籍のタイトルを入力してください。")
+        val title = readLine()?: ""
+        val deletingBooks = bookshelf.books.filter {
+            it.title.contains(title)
+        }
+
+        println("これらの書籍を削除しますか？ y/n")
+        deletingBooks.forEach {
+            this.showBook(it)
+        }
+
+        val yn = readLine()?: ""
+        if(yn == "y") {
+            bookshelf.delete(deletingBooks)
+            println("書籍を削除しました。")
+        } else {
+            println("書籍の削除を中止しました。")
+        }
     }
 
     //タイトルを部分一致で書籍検索。複数該当する書籍があれば複数表示。

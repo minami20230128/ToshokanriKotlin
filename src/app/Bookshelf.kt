@@ -5,6 +5,8 @@ class Bookshelf {
 
     fun add(book: Book) = _books.add(book)
 
+    fun delete(books: List<Book>) = _books.removeAll(books)
+
     val books: List<Book>
         get() = _books.toList()
 }
