@@ -21,7 +21,7 @@ class Main {
     //すべての書籍情報を確認できる。
     fun showAllBooks() {
         bookshelf.books.forEach {
-            this.showBook(it)
+            it.show()
         }
     }
 
@@ -56,7 +56,7 @@ class Main {
 
         println("これらの書籍を削除しますか？ y/n")
         deletingBooks.forEach {
-            this.showBook(it)
+            it.show()
         }
 
         val yn = readLine()?: ""
@@ -77,7 +77,7 @@ class Main {
         }
 
         searchedBooks.forEach {
-            this.showBook(it)
+            it.show()
         }
     }
 
@@ -133,8 +133,8 @@ class Main {
     }
     
 
-    private fun showBook(book: Book) {
-        println("${book.title} (${book.publisher}, ${book.date})")
-        println("   著者: ${book.authors.joinToString(", ")}")
+    private fun Book.show() {
+        println("$title ($publisher, $date)")
+        println("   著者: ${authors.joinToString(", ")}")
     }
 }
