@@ -9,9 +9,7 @@ import java.io.FileNotFoundException
 
 fun main() {
     val main = Main()
-    main.loadBooks()
-    main.showAllBooks()
-    main.deleteBooks()
+    main.addBook()
     main.showAllBooks()
 }
 
@@ -34,12 +32,7 @@ class Main {
         println("出版年月日を入力してください。")
         val date = readLine()?: ""
         println("著者名を入力してください。入力を終了したいときは、何も入力せずEnterを押してください。")
-        val authors = mutableListOf<String>()
-        while(true) {
-            val author = readLine() ?: break //nullなら終了
-            if (author.isEmpty()) break
-            authors.add(author)
-        }
+        val authors = generateSequence { readLine()?.takeIf { it.isNotBlank() } }.toList()
 
         val book = Book(title, publisher, date, authors)
         bookshelf.add(book)
