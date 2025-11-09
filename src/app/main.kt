@@ -9,8 +9,29 @@ import java.io.FileNotFoundException
 
 fun main() {
     val main = Main()
-    main.addBook()
-    main.showAllBooks()
+
+    while(true) {
+        println("メニューを選択してください。")
+        println("1. すべての書籍情報を表示する")
+        println("2. 書籍を新しく登録する")
+        println("3. 書籍を削除する")
+        println("4. 書籍を検索する")
+        println("5. 書籍情報をテキストファイルに保存する")
+        println("6. 書籍情報をテキストファイルから読み込む")
+
+        val input = readLine()?: ""
+        val num: Int = input!!.toInt()
+
+        when (num) {
+            1 -> main.showAllBooks()
+            2 -> main.addBook()
+            3 -> main.deleteBooks()
+            4 -> main.searchBooks()
+            5 -> main.saveBooks()
+            6 -> main.loadBooks()
+            else -> println("1~6の数字を入力してください。")
+        }
+    }
 }
 
 class Main {
