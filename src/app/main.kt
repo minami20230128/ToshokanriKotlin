@@ -20,7 +20,7 @@ fun main() {
         println("6. 書籍情報をテキストファイルから読み込む")
 
         val input = readLine()?: ""
-        val num: Int = input!!.toInt()
+        val num: Int = input.toInt()
 
         when (num) {
             1 -> main.showAllBooks()
@@ -137,9 +137,8 @@ class Main {
                     val authors = list.drop(3)
                     val book = Book(title, publisher, date, authors)
                     this.bookshelf.add(book)
-
-                    println("ファイルをロードしました。")
                 }
+                println("ファイルをロードしました。")
             } 
         } catch (e: FileNotFoundException) {
             println("指定したファイルが見つかりません。")
