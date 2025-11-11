@@ -64,9 +64,7 @@ class Main {
     fun deleteBooks() {
         println("消去する書籍のタイトルを入力してください。")
         val title = readLine()?: ""
-        val deletingBooks = bookshelf.books.filter {
-            it.title.contains(title)
-        }
+        val deletingBooks = bookshelf.find(title)
 
         println("これらの書籍を削除しますか？ y/n")
         deletingBooks.forEach {
@@ -86,9 +84,7 @@ class Main {
     fun searchBooks() {
         println("探したい書籍のタイトルを入力してください。")
         val title = readLine()?: ""
-        val searchedBooks = bookshelf.books.filter {
-            it.title.contains(title)
-        }
+        val searchedBooks = bookshelf.find(title)
 
         searchedBooks.forEach {
             it.show()
@@ -142,9 +138,8 @@ class Main {
             } 
         } catch (e: FileNotFoundException) {
             println("指定したファイルが見つかりません。")
-        } 
+        }
     }
-    
 
     private fun Book.show() {
         println("$title ($publisher, $date)")
