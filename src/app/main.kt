@@ -18,6 +18,7 @@ fun main() {
         println("4. 書籍を検索する")
         println("5. 書籍情報をテキストファイルに保存する")
         println("6. 書籍情報をテキストファイルから読み込む")
+        println("7. 書籍情報を修正する")
 
         val input = readLine()?: ""
         val num: Int = input.toInt()
@@ -29,6 +30,7 @@ fun main() {
             4 -> main.searchBooks()
             5 -> main.saveBooks()
             6 -> main.loadBooks()
+            7 -> main.modifyBooks()
             else -> println("1~6の数字を入力してください。")
         }
     }
@@ -141,8 +143,44 @@ class Main {
         }
     }
 
+    fun modifyBooks() {
+        println("修正したい書籍のタイトルを入力してください。")
+        val title = readLine() ?: ""
+        val results = bookshelf.findIndexed(title)
+
+        println("これらの書籍を修正しますか？ y/n")
+        results.forEachIndexed { i, (_, book) ->
+            println("[$i]")
+            book.show()
+        }
+
+        val yn = readLine()?: ""
+        if(yn == "y") {
+            results.forEachIndexed { i, (_, book) ->
+                val modifiedBook = inputBook()
+                bookshelf.replace(i, modifiedBook)
+            }
+            println("書籍を修正しました。")
+        } else {
+            println("書籍の修正を中止しました。")
+        }
+    }
+
     private fun Book.show() {
         println("$title ($publisher, $date)")
         println("   著者: ${authors.joinToString(", ")}")
+    }
+
+    private fun inputBook(): Book {
+        println("タイトルを入力してください。")
+        val title = readLine()?: ""
+        println("出版社名を入力してください。")
+        val publisher = readLine()?: ""
+        println("出版年月日を入力してください。")
+        val date = readLine()?: ""
+        println("著者名を入力してください。入力を終了したいときは、何も入力せずEnterを押してください。")
+        val authors = generateSequence { readLine()?.takeIf { it.isNotBlank() } }.toList()
+
+        return Book(title, publisher, date, authors)
     }
 }
