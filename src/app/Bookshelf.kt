@@ -14,6 +14,15 @@ class Bookshelf {
         return books
     }
 
+    fun findIndexed(title: String): List<Pair<Int, Book>> =
+        _books.mapIndexedNotNull { index, book ->
+            if (book.title.contains(title)) index to book else null
+    }
+
+    fun replace(index: Int, book: Book) {
+        _books.set(index, book)
+    }
+
     val books: List<Book>
         get() = _books.toList()
 }
