@@ -148,6 +148,11 @@ class Main {
         val title = readLine() ?: ""
         val results = bookshelf.findIndexed(title)
 
+        if(results.size == 0) {
+            println("該当タイトルの書籍は見つかりませんでした。")
+            return
+        }
+
         println("これらの書籍を修正しますか？ y/n")
         results.forEachIndexed { i, (_, book) ->
             println("[$i]")
