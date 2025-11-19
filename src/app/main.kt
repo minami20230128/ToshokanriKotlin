@@ -153,18 +153,18 @@ class Main {
             return
         }
 
-        println("これらの書籍を修正しますか？ y/n")
-        results.forEachIndexed { i, (_, book) ->
-            println("[$i]")
-            book.show()
-        }
+        println("修正したい書籍番号を指定してください。")
+        showIndexedBooks(results)
+        val input = readLine()?: ""
+        val index: Int = input.toInt()
+        val book = bookshelf.findByIndex(index)
+        println("この書籍を修正しますか？ y/n")
+        book.show()
 
         val yn = readLine()?: ""
-        if(yn == "y") {
-            results.forEachIndexed { i, (_, book) ->
-                val modifiedBook = inputBook()
-                bookshelf.replace(i, modifiedBook)
-            }
+        if(yn.equals("y")) {
+            val modifiedBook = inputBook()
+            bookshelf.replace(index, modifiedBook)
             println("書籍を修正しました。")
         } else {
             println("書籍の修正を中止しました。")
@@ -174,6 +174,13 @@ class Main {
     private fun Book.show() {
         println("$title ($publisher, $date)")
         println("   著者: ${authors.joinToString(", ")}")
+    }
+
+    private fun showIndexedBooks(indexedBooks: List<Pair<Int, Book>>) {
+        indexedBooks.forEachIndexed { i, (_, book) ->
+            println("[$i]")
+            book.show()
+        }
     }
 
     private fun inputBook(): Book {

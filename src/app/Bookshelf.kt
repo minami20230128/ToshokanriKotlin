@@ -23,6 +23,10 @@ class Bookshelf {
         _books.set(index, book)
     }
 
+    fun findByIndex(index: Int): Book {
+        return _books.get(index)
+    }
+
     val books: List<Book>
         get() = _books.toList()
 }
