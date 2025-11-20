@@ -62,20 +62,23 @@ class Main {
     }
 
     //タイトルを部分一致で書籍検索し、該当する書籍を消去。
-    //複数該当する書籍がある場合、どの書籍を消去するかを一つだけ番号で指定してもらう。（保留。いったん全部削除する方向で実装）
+    //複数該当する書籍がある場合、どの書籍を消去するかを一つだけ番号で指定してもらう。
     fun deleteBooks() {
         println("消去する書籍のタイトルを入力してください。")
         val title = readLine()?: ""
-        val deletingBooks = bookshelf.find(title)
+        val results = bookshelf.findIndexed(title)
 
-        println("これらの書籍を削除しますか？ y/n")
-        deletingBooks.forEach {
-            it.show()
-        }
+        println("修正したい書籍番号を指定してください。")
+        showIndexedBooks(results)
+        val input = readLine()?: ""
+        val index: Int = input.toInt()
+        val book = bookshelf.findByIndex(index)
+        println("この書籍を消去しますか？ y/n")
+        book.show()
 
         val yn = readLine()?: ""
         if(yn == "y") {
-            bookshelf.delete(deletingBooks)
+            bookshelf.delete(book)
             println("書籍を削除しました。")
         } else {
             println("書籍の削除を中止しました。")

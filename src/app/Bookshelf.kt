@@ -5,7 +5,7 @@ class Bookshelf {
 
     fun add(book: Book) = _books.add(book)
 
-    fun delete(books: List<Book>) = _books.removeAll(books)
+    fun delete(book: Book) = _books.remove(book)
 
     fun find(title: String) :List<Book> {
         val books =_books.filter {
